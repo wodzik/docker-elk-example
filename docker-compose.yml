@@ -14,6 +14,7 @@ logstash:
     - "5000:5000"
   links:
     - elasticsearch
+
 kibana:
   build: kibana/
   volumes:
@@ -23,12 +24,11 @@ kibana:
   links:
     - elasticsearch
 
-
 busybox:
   build: busybox
   links:
     - logstash:logstash
-  log_driver: gelf
+  log_driver: syslog
   log_opt:
-    gelf-address: "udp://172.17.0.14:5000"
+    syslog-address: "udp://172.17.0.14:5000"
     tag: busybox
